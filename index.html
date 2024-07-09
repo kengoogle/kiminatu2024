@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お祭りアンケート</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #ffe6e6;
+            color: #444;
+        }
+        h1 {
+            font-size: 1.8em;
+            text-align: center;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        .question {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .question p {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff9999;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            border: 1px solid #ffb3b3;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            background-color: #ff9999;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ff7777;
+        }
+        #thankYouMessage {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 230, 230, 0.9);
+            color: #ff6b6b;
+            font-size: 1.2em;
+            text-align: center;
+            padding-top: 40%;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎆 お祭りアンケート 🎆</h1>
+    <form id="surveyForm">
+        <div class="question">
+            <p>1. 花火は楽しめましたか？ 🎇</p>
+            <label><input type="radio" name="q1" value="楽しかった" required> 楽しかった</label>
+            <label><input type="radio" name="q1" value="ふつう"> ふつう</label>
+            <label><input type="radio" name="q1" value="楽しくなかった"> 楽しくなかった</label>
+        </div>
+        <!-- 他の質問も同様に修正 -->
+        <div class="question">
+            <p>具体的な意見や感想があれば、こちらにご記入ください。 💖</p>
+            <textarea name="opinion"></textarea>
+        </div>
+        <div class="question">
+            <p>困ったことや改善してほしいところなど、ありましたら遠慮なくご記入ください。 🌟</p>
+            <textarea name="improvement"></textarea>
+        </div>
+        <button type="button" onclick="submitSurvey()">送信 💌</button>
+    </form>
+
+    <div id="thankYouMessage">
+        ご回答ありがとうございます。<br>お礼に、「きみの夏２０２４テーマ曲」をおききください。
+    </div>
+
+    <script>
+        function submitSurvey() {
+            const form = document.getElementById('surveyForm');
+            const formData = new FormData(form);
+            
+            let body = '';
+            for (let [key, value] of formData.entries()) {
+                if (key.startsWith('q')) {
+                    body += `質問${key.slice(1)}の回答: ${value}\n`;
+                } else if (key === 'opinion') {
+                    body += `意見: ${value}\n`;
+                } else if (key === 'improvement') {
+                    body += `改善点: ${value}\n`;
+                }
+            }
+
+            const mailtoLink = `mailto:teamkimi@mail.goo.ne.jp?subject=お祭り終了後のアンケート回答&body=${encodeURIComponent(body)}`;
+            
+            // サンクスメッセージを表示
+            document.getElementById('thankYouMessage').style.display = 'block';
+            
+            // 4秒後にYouTubeリンクへ移動
+            setTimeout(function() {
+                window.location.href = 'https://youtu.be/wpZlLeVMTOY';
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
